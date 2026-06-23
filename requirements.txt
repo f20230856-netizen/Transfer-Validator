@@ -1,0 +1,11 @@
+streamlit
+langgraph
+langchain-google-genai
+pydantic
+python-dotenv
+tavily-python
+requests
+cloudscraper
+beautifulsoup4
+lxml
+pandas
