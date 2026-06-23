@@ -1,0 +1,14 @@
+{
+  "nico williams": {"role": "Winger", "market_value_eur": 60000000, "percentiles": {"Progressive Carries": 94, "Successful Take-ons": 91, "npxG": 60, "Pass Completion": 74, "Passes into Penalty Area": 66, "Pressures Att 3rd": 70}},
+  "anthony gordon": {"role": "Winger", "market_value_eur": 80000000, "percentiles": {"Progressive Carries": 88, "Successful Take-ons": 79, "npxG": 64, "Pass Completion": 71, "Passes into Penalty Area": 60, "Pressures Att 3rd": 82}},
+  "lamine yamal": {"role": "Winger", "market_value_eur": 150000000, "percentiles": {"Progressive Carries": 92, "Successful Take-ons": 93, "npxG": 70, "Pass Completion": 80, "Passes into Penalty Area": 88, "Pressures Att 3rd": 62}},
+  "vinicius junior": {"role": "Winger", "market_value_eur": 180000000, "percentiles": {"Progressive Carries": 90, "Successful Take-ons": 96, "npxG": 78, "Pass Completion": 70, "Passes into Penalty Area": 72, "Pressures Att 3rd": 66}},
+  "bukayo saka": {"role": "Winger", "market_value_eur": 140000000, "percentiles": {"Progressive Carries": 82, "Successful Take-ons": 80, "npxG": 75, "Pass Completion": 78, "Passes into Penalty Area": 90, "Pressures Att 3rd": 74}},
+  "mohamed salah": {"role": "Winger", "market_value_eur": 65000000, "percentiles": {"Progressive Carries": 70, "Successful Take-ons": 68, "npxG": 92, "Pass Completion": 72, "Passes into Penalty Area": 80, "Pressures Att 3rd": 55}},
+  "rafael leao": {"role": "Winger", "market_value_eur": 90000000, "percentiles": {"Progressive Carries": 89, "Successful Take-ons": 84, "npxG": 66, "Pass Completion": 70, "Passes into Penalty Area": 64, "Pressures Att 3rd": 58}},
+  "rodri": {"role": "Defensive Midfielder", "market_value_eur": 110000000, "percentiles": {"Progressive Carries": 80, "Successful Take-ons": 40, "npxG": 35, "Pass Completion": 97, "Passes into Penalty Area": 55, "Pressures Att 3rd": 50}},
+  "pedri": {"role": "Midfielder", "market_value_eur": 1200000000, "percentiles": {"Progressive Carries": 88, "Successful Take-ons": 72, "npxG": 40, "Pass Completion": 94, "Passes into Penalty Area": 62, "Pressures Att 3rd": 60}},
+  "jude bellingham": {"role": "Midfielder", "market_value_eur": 180000000, "percentiles": {"Progressive Carries": 85, "Successful Take-ons": 75, "npxG": 80, "Pass Completion": 82, "Passes into Penalty Area": 78, "Pressures Att 3rd": 72}},
+  "martin odegaard": {"role": "Attacking Midfielder", "market_value_eur": 110000000, "percentiles": {"Progressive Carries": 76, "Successful Take-ons": 70, "npxG": 68, "Pass Completion": 88, "Passes into Penalty Area": 92, "Pressures Att 3rd": 80}},
+  "florian wirtz": {"role": "Attacking Midfielder", "market_value_eur": 120000000, "percentiles": {"Progressive Carries": 86, "Successful Take-ons": 82, "npxG": 74, "Pass Completion": 85, "Passes into Penalty Area": 89, "Pressures Att 3rd": 76}}
+}
