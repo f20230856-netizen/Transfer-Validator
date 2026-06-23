@@ -1,6 +1,6 @@
 ⚽ Agentic Transfer Market Validator
 
-A "Digital Sporting Director" that takes a free-text football transfer rumor and returns a structured validity report — source credibility, tactical fit, value assessment, and a Proceed / Caution / Avoid verdict.
+A "Digital Sporting Director" that takes a free-text football transfer rumor and returns a structured validity report i.e source credibility, tactical fit, value assessment, and a Proceed / Caution / Avoid verdict.
 
 🔗 Live demo: https://transfer-validator-nstxgudkjnswfopyotx45u.streamlit.app/
 
@@ -14,63 +14,33 @@ What this does (precisely)
 You type something like "Nico Williams to Barcelona for €60m, reported by Sky Sports." The system:
 
 
-Parses the unstructured text into structured fields (player, club, fee, source) — LLM-powered.
-Scores credibility by checking the source against a journalist/outlet tier list and counting independent corroborating reports — rules-based.
-Assesses value by comparing the reported fee to the player's market value — rules-based.
-Computes tactical fit by comparing the player's statistical profile (percentiles) against the buying club's playing-style profile — rules-based.
-Synthesizes a verdict — a Proceed / Caution / Avoid recommendation with written reasoning over all of the above — LLM-powered.
+Parses the unstructured text into structured fields (player, club, fee, source) - LLM-powered.
+Scores credibility by checking the source against a journalist/outlet tier list and counting independent corroborating reports - rules-based.
+Assesses value by comparing the reported fee to the player's market value - rules-based.
+Computes tactical fit by comparing the player's statistical profile (percentiles) against the buying club's playing-style profile - rules-based.
+Synthesizes a verdict — a Proceed / Caution / Avoid recommendation with written reasoning over all of the above - LLM-powered.
 
 
 The whole thing is orchestrated as a directed LangGraph pipeline with conditional routing (a low-credibility junk rumor short-circuits early to save compute) and graceful degradation (a missing data source lowers confidence rather than crashing the report).
 
 
-Honest scope note (read this): This is a working pipeline demoed on a curated cached dataset of ~12 marquee players across 5 clubs. The reasoning runs live on every request, but the underlying player stats are read from a committed cache — a deliberate decision for demo reliability (see Key Decisions). Player percentiles are position-calibrated estimates derived from FBref per-90 data. Live web scraping is a documented v2 item, not a current capability. I'd rather state that plainly than imply the tool knows real-world transfer outcomes — it evaluates the plausibility of a claim, not its truth.
+Honest scope note (read this): This is a working pipeline demoed on a curated cached dataset of ~12 marquee players across 5 clubs. The reasoning runs live on every request, but the underlying player stats are read from a committed cache - a deliberate decision for demo reliability (see Key Decisions). Player percentiles are position-calibrated estimates derived from FBref per-90 data. Live web scraping is a documented v2 item, not a current capability. I'd rather state that plainly than imply the tool knows real-world transfer outcomes - it evaluates the plausibility of a claim, not its truth.
 
 
-
-
-Architecture
-
-   rumor text
-        │
-        ▼
-   ┌──────────┐    ┌─────────────┐   tier 5 + 0 corroboration
-   │  PARSE   │──► │ CREDIBILITY │──────────────┐ (short-circuit)
-   │  (LLM)   │    │  (rules)    │              │
-   └──────────┘    └──────┬──────┘              │
-                          │ otherwise           │
-                ┌─────────┴─────────┐           │
-                ▼                   ▼           │
-        ┌──────────────┐   ┌──────────────┐     │
-        │ MARKET VALUE │   │ PERFORMANCE  │     │
-        │   (rules)    │   │   (cache)    │     │
-        └──────┬───────┘   └──────┬───────┘     │
-               │                  ▼             │
-               │           ┌──────────────┐     │
-               │           │ TACTICAL FIT │     │
-               │           │   (rules)    │     │
-               │           └──────┬───────┘     │
-               └────────┬─────────┘             │
-                        ▼                       │
-                  ┌──────────┐ ◄────────────────┘
-                  │ VERDICT  │
-                  │  (LLM)   │
-                  └──────────┘
-
-Why LangGraph (over CrewAI / AutoGen): the pipeline needs conditional branching, parallel fan-out, and explicit failure recovery — all native LangGraph primitives. AutoGen is in maintenance mode as of 2026, and CrewAI handles the short-circuit/parallel logic less cleanly. The graph is also a typed state machine, which makes the data flow inspectable and debuggable.
+Why LangGraph (over CrewAI / AutoGen): the pipeline needs conditional branching, parallel fan-out, and explicit failure recovery - all native LangGraph primitives. AutoGen is in maintenance mode as of 2026, and CrewAI handles the short-circuit/parallel logic less cleanly. The graph is also a typed state machine, which makes the data flow inspectable and debuggable.
 
 Honest breakdown of what's "AI" vs. deterministic (because the distinction matters and interviewers ask):
 
 ComponentPowered byRumor parsing (text → structured)LLM (Gemini 2.5 Flash)Verdict synthesis (data → recommendation)LLM (Gemini 2.5 Flash)Credibility tiering & corroborationDeterministic rulesTactical fit scoreDeterministic (vector comparison)Value premiumDeterministic (arithmetic)
 
-This is accurately described as an LLM-orchestrated workflow, not an autonomous multi-agent system — the graph follows a fixed, hand-designed control flow.
+This is accurately described as an LLM-orchestrated workflow, not an autonomous multi-agent system - the graph follows a fixed, hand-designed control flow.
 
 
 Key product decisions (the why, not just the what)
 
 
 Scoped to 5 clubs with handcrafted style profiles. Tactical fit needs a model of each club's system. Rather than fake breadth, I hand-built profiles for Barcelona, Real Madrid, Man City, Arsenal, and Liverpool. Narrow and correct beats broad and hand-wavy.
-Cached dataset over live scraping. FBref/Transfermarkt rate-limit aggressively and break in front of an audience. A committed cache makes the demo bulletproof. The trade-off (no live data) is the explicit cost of a reliable demo — a product decision, not an oversight.
+Cached dataset over live scraping. FBref/Transfermarkt rate-limit aggressively and break in front of an audience. A committed cache makes the demo bulletproof. The trade-off (no live data) is the explicit cost of a reliable demo - a product decision, not an oversight.
 Deterministic scoring, not "ask the LLM." Credibility and fit are reproducible and explainable. An LLM-guessed credibility score can't be defended; a journalist-tier lookup can.
 A short-circuit for junk rumors. A lowest-tier, uncorroborated rumor exits early to an "Avoid" verdict without spending compute on analysis — a small but real cost/latency decision.
 
@@ -113,8 +83,8 @@ cd Transfer-Validator
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 # add a .env file with:
-#   GOOGLE_API_KEY=inserted my key
-#   TAVILY_API_KEY=here as well
+#   GOOGLE_API_KEY=insert-your-key
+#   TAVILY_API_KEY=insert-your-key
 streamlit run app.py
 
 Limitations
